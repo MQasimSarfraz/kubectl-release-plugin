@@ -9,6 +9,7 @@ import (
 	"strings"
 	"os"
 	"github.com/pkg/errors"
+	"time"
 )
 
 func main() {
@@ -51,11 +52,28 @@ func getProjectsInfo(c *github.Client, p *[]project) ([][]string, error) {
 		if err != nil {
 			return nil, err
 		}
-		projectsInfo = append(projectsInfo, []string{repo.name, *gitRelease.TagName, (*gitRelease.CreatedAt).String(), *gitRelease.HTMLURL})
+
+		projectsInfo = append(projectsInfo, []string{repo.name, *gitRelease.TagName, getAge(gitRelease.CreatedAt.Time), *gitRelease.HTMLURL})
 
 	}
 
 	return projectsInfo, nil
+}
+
+func getAge(t time.Time) string {
+	age := time.Now().Sub(t)
+	if age.Hours() != 0 {
+		hours := int(age.Hours())
+		if hours < 24 {
+			return fmt.Sprintf("%d hours", hours)
+		} else {
+			return fmt.Sprintf("%d days", hours/24)
+		}
+	} else if age.Minutes() != 0 {
+		return fmt.Sprintf("%d minutes", int(age.Minutes()))
+	} else {
+		return fmt.Sprintf("%d seconds", int(age.Seconds()))
+	}
 }
 
 func formatAndPrintTable(out io.Writer, headers []string, rows [][]string) error {
