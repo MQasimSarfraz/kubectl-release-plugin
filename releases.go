@@ -20,7 +20,9 @@ func main() {
 	// names of the project to retrieve release information
 	k8s := project{"kubernetes", "kubernetes"}
 	kops := project{"kubernetes", "kops"}
-	projects := &[]project{k8s, kops}
+	istio := project{"istio", "istio"}
+
+	projects := &[]project{k8s, kops, istio}
 
 	// get the project information
 	client := github.NewClient(nil)

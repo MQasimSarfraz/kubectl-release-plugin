@@ -1,4 +1,4 @@
-module github.com/MQasimSarfraz/kubectl-releases
+module github.com/MQasimSarfraz/kubectl-latest_release
 
 require (
 	github.com/google/go-github/v21 v21.0.0
