@@ -21,8 +21,10 @@ func main() {
 	k8s := project{"kubernetes", "kubernetes"}
 	kops := project{"kubernetes", "kops"}
 	istio := project{"istio", "istio"}
+	helm := project{"helm", "helm"}
+	nginxIngress := project{"kubernetes", "ingress-nginx"}
 
-	projects := &[]project{k8s, kops, istio}
+	projects := &[]project{k8s, kops, istio, helm, nginxIngress}
 
 	// get the project information
 	client := github.NewClient(nil)
@@ -30,10 +32,10 @@ func main() {
 	if err != nil {
 		switch errors.Cause(err).(type) {
 		case *github.RateLimitError:
-			fmt.Println("Could not retrive information for github - Hitting rate limit")
+			fmt.Println("Could not retrive information from github - Hitting rate limit")
 			os.Exit(1)
 		default:
-			fmt.Println("Could not retrive information for github - error type Unknown")
+			fmt.Println("Could not retrive information from github - error type Unknown")
 			os.Exit(1)
 		}
 	}
