@@ -13,4 +13,4 @@ docker run -it --rm \
   -v $PWD:/src \
   -w /src \
   -e $GITHUB_TOKEN \
-  goreleaser/goreleaser release
+  goreleaser/goreleaser:v0.97.0 release
