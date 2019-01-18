@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/google/go-github/v21/github"
+	"github.com/pkg/errors"
 	"io"
 	"os"
 	"strings"
@@ -76,6 +77,19 @@ func Execute(filterProject string, showProjects bool) error {
 	formatAndPrintTable(os.Stdout, titles, projectsRelease)
 
 	return nil
+}
+
+func CheckError(err error) {
+	if err != nil {
+		switch errors.Cause(err).(type) {
+		case *github.RateLimitError:
+			fmt.Println("Could not retrieve information from github - Hitting rate limit")
+			os.Exit(1)
+		default:
+			fmt.Printf("%v\n", err)
+			os.Exit(1)
+		}
+	}
 }
 
 func release(client *github.Client, project project) ([]string, error) {
