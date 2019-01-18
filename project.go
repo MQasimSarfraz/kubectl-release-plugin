@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/google/go-github/v21/github"
 	"github.com/pkg/errors"
+	"golang.org/x/oauth2"
 	"io"
 	"os"
 	"strings"
@@ -51,13 +52,14 @@ func Execute(filterProject string, showProjects bool) error {
 		return nil
 	}
 
-	client := github.NewClient(nil)
+	ctx := context.Background()
+	client := newGitClient(ctx)
 
 	var projectsRelease [][]string
 	for _, project := range *projects {
 		if filterProject != "" {
 			if strings.ToLower(filterProject) == project.name {
-				release, err := release(client, project)
+				release, err := release(client, ctx, project)
 				if err != nil {
 					return err
 				}
@@ -66,7 +68,7 @@ func Execute(filterProject string, showProjects bool) error {
 				break
 			}
 		} else {
-			release, err := release(client, project)
+			release, err := release(client, ctx, project)
 			if err != nil {
 				return err
 			}
@@ -83,7 +85,7 @@ func CheckError(err error) {
 	if err != nil {
 		switch errors.Cause(err).(type) {
 		case *github.RateLimitError:
-			fmt.Println("Could not retrieve information from github - Hitting rate limit")
+			fmt.Println("Hitting rate limit - Please set env GITHUB_TOKEN and retry")
 			os.Exit(1)
 		default:
 			fmt.Printf("%v\n", err)
@@ -92,8 +94,8 @@ func CheckError(err error) {
 	}
 }
 
-func release(client *github.Client, project project) ([]string, error) {
-	gitRelease, _, err := client.Repositories.GetLatestRelease(context.Background(), project.owner, project.name)
+func release(client *github.Client, ctx context.Context, project project) ([]string, error) {
+	gitRelease, _, err := client.Repositories.GetLatestRelease(ctx, project.owner, project.name)
 	if err != nil {
 		return nil, err
 	}
@@ -108,6 +110,16 @@ func listProjects() {
 	}
 
 	formatAndPrintTable(os.Stdout, []string{"NAME", "OWNER"}, list)
+}
+
+func newGitClient(ctx context.Context) *github.Client {
+	gitToken := os.Getenv("GITHUB_TOKEN")
+	if gitToken != "" {
+		tokenSource := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: gitToken})
+		tokenClient := oauth2.NewClient(ctx, tokenSource)
+		return github.NewClient(tokenClient)
+	}
+	return github.NewClient(nil)
 }
 
 func formatAndPrintTable(out io.Writer, titles []string, rows [][]string) error {
