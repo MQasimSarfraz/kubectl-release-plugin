@@ -38,6 +38,71 @@ var projects = &[]project{
 		owner: "kubernetes",
 		name:  "ingress-nginx",
 	},
+	{
+		owner: "etcd-io",
+		name:  "etcd",
+	},
+	{
+		owner: "containous",
+		name:  "traefik",
+	},
+	{
+		owner: "openfaas",
+		name: "faas",
+	},
+	{
+		owner: "rancher",
+		name: "rancher",
+	},
+	{
+		owner: "kubeflow",
+		name: "kubeflow",
+	},
+	{
+		owner: "kubernetes-sigs",
+		name: "kubespray",
+	},
+	{
+		owner: "kubernetes-sigs",
+		name: "cluster-api",
+	},
+	{
+		owner: "rook",
+		name: "rook",
+	},
+	{
+		owner: "kubeless",
+		name: "kubeless",
+	},
+	{
+		owner: "coreos",
+		name: "flannel",
+	},
+	{
+		owner: "cilium",
+		name: "cilium",
+	},
+	{
+		owner: "argoproj",
+		name: "argo",
+	},
+	{
+		owner: "zalando",
+		name: "patroni",
+	},
+	{
+		owner: "kubernetes-incubator",
+		name: "external-dns",
+	},
+	{
+		owner: "pulumi",
+		name: "pulumi",
+
+	},
+	{
+		owner: "linkerd",
+		name: "linkerd2",
+	},
 }
 
 type project struct {

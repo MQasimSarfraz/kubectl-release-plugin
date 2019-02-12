@@ -15,6 +15,18 @@ Help Options:
 ```
 
 ## Example:
+List all the valid projects using:
+```
+[qasim.sarfraz@~ ]$  kubectl latest-release -l
+NAME           OWNER
+kubernetes     kubernetes
+kops           kubernetes
+istio          istio
+helm           helm
+ingress-nginx  kubernetes
+
+```
+Check the release for a given project:
 ```
 [qasim.sarfraz@~ ]$  kubectl latest-release -p helm
 NAME  VERSION  AGE     URL
