@@ -9,6 +9,11 @@ if [[ ! $VERSION =~ $VERSION_REGEX ]]; then
     exit 1
 fi
 
+if [[ -z $GITHUB_TOKEN ]]; then
+  echo "Please set the \$GITHUB_TOKEN, exiting ..."
+  exit 1
+fi
+
 docker run -it --rm \
   -v $PWD:/src \
   -w /src \
