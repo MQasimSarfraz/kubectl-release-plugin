@@ -3,7 +3,7 @@ package kubectlreleaseplugin
 import (
 	"context"
 	"fmt"
-	"github.com/google/go-github/v21/github"
+	"github.com/google/go-github/v24/github"
 	"github.com/pkg/errors"
 	"golang.org/x/oauth2"
 	"io"
@@ -48,60 +48,59 @@ var projects = &[]project{
 	},
 	{
 		owner: "openfaas",
-		name: "faas",
+		name:  "faas",
 	},
 	{
 		owner: "rancher",
-		name: "rancher",
+		name:  "rancher",
 	},
 	{
 		owner: "kubeflow",
-		name: "kubeflow",
+		name:  "kubeflow",
 	},
 	{
 		owner: "kubernetes-sigs",
-		name: "kubespray",
+		name:  "kubespray",
 	},
 	{
 		owner: "kubernetes-sigs",
-		name: "cluster-api",
+		name:  "cluster-api",
 	},
 	{
 		owner: "rook",
-		name: "rook",
+		name:  "rook",
 	},
 	{
 		owner: "kubeless",
-		name: "kubeless",
+		name:  "kubeless",
 	},
 	{
 		owner: "coreos",
-		name: "flannel",
+		name:  "flannel",
 	},
 	{
 		owner: "cilium",
-		name: "cilium",
+		name:  "cilium",
 	},
 	{
 		owner: "argoproj",
-		name: "argo",
+		name:  "argo",
 	},
 	{
 		owner: "zalando",
-		name: "patroni",
+		name:  "patroni",
 	},
 	{
 		owner: "kubernetes-incubator",
-		name: "external-dns",
+		name:  "external-dns",
 	},
 	{
 		owner: "pulumi",
-		name: "pulumi",
-
+		name:  "pulumi",
 	},
 	{
 		owner: "linkerd",
-		name: "linkerd2",
+		name:  "linkerd2",
 	},
 }
 

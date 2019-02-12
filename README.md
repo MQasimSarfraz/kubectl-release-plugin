@@ -24,7 +24,22 @@ kops           kubernetes
 istio          istio
 helm           helm
 ingress-nginx  kubernetes
-
+etcd           etcd-io
+traefik        containous
+faas           openfaas
+rancher        rancher
+kubeflow       kubeflow
+kubespray      kubernetes-sigs
+cluster-api    kubernetes-sigs
+rook           rook
+kubeless       kubeless
+flannel        coreos
+cilium         cilium
+argo           argoproj
+patroni        zalando
+external-dns   kubernetes-incubator
+pulumi         pulumi
+linkerd2       linkerd
 ```
 Check the release for a given project:
 ```
