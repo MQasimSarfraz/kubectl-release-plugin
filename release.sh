@@ -17,5 +17,5 @@ fi
 docker run -it --rm \
   -v $PWD:/src \
   -w /src \
-  -e $GITHUB_TOKEN \
-  goreleaser/goreleaser:v0.97.0 release
+  -e GITHUB_TOKEN=$GITHUB_TOKEN \
+  goreleaser/goreleaser:v0.97.0 release --rm-dist 
