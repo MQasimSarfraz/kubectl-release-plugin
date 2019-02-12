@@ -13,10 +13,10 @@ import (
 	"time"
 )
 
-// Titles for the table columns
 var titles = []string{"NAME", "VERSION", "AGE", "URL"}
 
-// names of the project to retrieve release information
+var defaultProject = project{owner: "kubernetes", name: "kubernetes"}
+
 var projects = &[]project{
 	{
 		owner: "kubernetes",
@@ -56,8 +56,8 @@ func Execute(filterProject string, showProjects bool) error {
 	client := newGitClient(ctx)
 
 	var projectsRelease [][]string
-	for _, project := range *projects {
-		if filterProject != "" {
+	if filterProject != "" {
+		for _, project := range *projects {
 			if strings.ToLower(filterProject) == project.name {
 				release, err := release(client, ctx, project)
 				if err != nil {
@@ -67,13 +67,14 @@ func Execute(filterProject string, showProjects bool) error {
 				projectsRelease = append(projectsRelease, release)
 				break
 			}
-		} else {
-			release, err := release(client, ctx, project)
-			if err != nil {
-				return err
-			}
-			projectsRelease = append(projectsRelease, release)
 		}
+	} else {
+		release, err := release(client, ctx, defaultProject)
+		if err != nil {
+			return err
+		}
+
+		projectsRelease = append(projectsRelease, release)
 	}
 
 	formatAndPrintTable(os.Stdout, titles, projectsRelease)
